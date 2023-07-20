@@ -65,7 +65,7 @@ def vad_torch(waves, buff_size, threshold, display_info=False):
     return torch.tensor([signal])
 
 class PreprocessAudio:
-    def __init__(self, audio_dir, n_fft = 1024, #transcript_txt
+    def __init__(self, audio_dir, n_fft = 1024, #transcript_txt,
                  win_length = None, hop_length = 128, n_mels = 64, n_mfcc = 64):
         self.audio_dir = audio_dir
         # self.transcript_txt = transcript_txt
