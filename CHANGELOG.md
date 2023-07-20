@@ -15,5 +15,6 @@ Idris:
 * Implementing audio enhancements to clarify the resulting sound
 
 ## 21/07/2023
+Kevin:
 * Built model:
 ![Model Architecture](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/blob/9af33e8ee18c944bff26bd4d072c9998cf40915d/img/Screenshot%202023-07-21%20004511.png)
