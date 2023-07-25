@@ -24,5 +24,7 @@ Kevin:
 ## 26/07/2023
 Idris : 
 * Successfully filtered audio with low correlation between voice and transcript.
+* Before
 ![Before](img/LpYAAAAASUVORK5CYII.png)
+* After
 ![After](img/wOvEjtAVcBTHgAAAABJRU5ErkJggg.png)
