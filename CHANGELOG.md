@@ -34,3 +34,7 @@ Idris :
 * After :
   
 ![After](img/wOvEjtAVcBTHgAAAABJRU5ErkJggg.png)
+
+Kevin :
+* Updated main.ipynb, model.py, and PreprocessAudio.py
+* Improving visualization and further audio cleaning
