@@ -22,8 +22,8 @@ Kevin:
 ![Model_Architecture_Rev](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/blob/6febd02fd7d74e7121f1984a23c6fc7920db2667/img/Screenshot%202023-07-21%20191832.png)
 
 Idris :
-*Need to reevaluate the data loader since the matrix sizes are still incorrect and need to be fixed. Additionally, the batch size also needs to be evaluated.
-
+* Need to reevaluate the data loader since the matrix sizes are still incorrect and need to be fixed. Additionally, the batch size also needs to be evaluated.
+![Error](img/WhatsApp%20Image%202023-07-21%20at%2020.51.16.jpg).
 
 ## 26/07/2023
 Idris : 
