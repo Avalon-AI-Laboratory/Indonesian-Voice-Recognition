@@ -24,3 +24,5 @@ Kevin:
 ## 26/07/2023
 Idris : 
 * Successfully filtered audio with low correlation between voice and transcript.
+![Before](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/blob/6febd02fd7d74e7121f1984a23c6fc7920db2667/img/LpYAAAAASUVORK5CYII.png)
+![After](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/blob/6febd02fd7d74e7121f1984a23c6fc7920db2667/img/OvEjtAVcBTHgAAAABJRU5ErkJggg.png)
