@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 class CRNN(nn.Module):
     def __init__(self, num_of_characters):
-        super(A_CRNN, self).__init__()
+        super(CRNN, self).__init__()
         self.conv1 = nn.Conv2d(1, 64, kernel_size=(3, 3), padding='same')
         self.bn1 = nn.BatchNorm2d(64)
         
@@ -20,15 +20,13 @@ class CRNN(nn.Module):
         
         self.fc1 = nn.Linear(512, 512)
         
-        self.attention1 = Attention(512)  # Attention before first LSTM
         self.lstm1 = nn.LSTM(512, 256, bidirectional=True, batch_first=True)
-        
-        self.attention2 = Attention(512)  # Attention before second LSTM
         self.lstm2 = nn.LSTM(512, 256, bidirectional=True, batch_first=True)
         
         self.fc2 = nn.Linear(512, num_of_characters)
         
     def forward(self, x):
+        batch_size = x.size(0)  # Extract the batch size dynamically
         x = self.conv1(x)
         x = self.bn1(x)
         x = F.relu(x)
@@ -45,7 +43,7 @@ class CRNN(nn.Module):
         x = F.relu(x)
         x = self.pool2(x)
         x = self.dropout(x)
-        x = x.view(1, 256, 512)
+        x = x.view(batch_size, x.size(1), x.size(2) * x.size(3))
         x = self.fc1(x)
 
         x, _ = self.lstm1(x)
@@ -53,4 +51,4 @@ class CRNN(nn.Module):
 
         x = self.fc2(x)
 
-        return F.softmax(x, dim = -1)
+        return F.softmax(x, dim=-1)
