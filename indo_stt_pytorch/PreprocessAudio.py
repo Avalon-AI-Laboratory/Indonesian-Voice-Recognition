@@ -18,7 +18,7 @@ def conv2wav_torch(audio_dir, resample):
 def vad_torch(waves, buff_size, threshold, display_info=False):
     mono_signal = waves[0].numpy()
     total_sig   = int(mono_signal.shape[0]/buff_size)
-    signal      = []
+    signal      = np.array([])
     for i in range(total_sig):
         sig = mono_signal[i*buff_size:(i+1)*buff_size]
         rms = math.sqrt(np.square(sig).mean())
@@ -32,10 +32,10 @@ def vad_torch(waves, buff_size, threshold, display_info=False):
     return torch.tensor([signal])
 
 class PreprocessAudio:
-    def __init__(self, audio_dir, n_fft = 1024, #transcript_txt
+    def __init__(self, audio_dir, transcript_df, n_fft = 1024,
                  win_length = None, hop_length = 128, n_mels = 64, n_mfcc = 64):
         self.audio_dir = audio_dir
-        # self.transcript_txt = transcript_txt
+        self.transcript_df = transcript_df
         self.mfcc_transform = T.MFCC(sample_rate=8000,
                                      n_mfcc=n_mfcc,
                                      melkwargs={"n_fft": n_fft,
@@ -44,9 +44,13 @@ class PreprocessAudio:
                                                 "mel_scale": "htk",
                                                })
     def load_audio(self):
+        i = 0
         print("Mounted audio directory at:", self.audio_dir)
-        _dir = os.listdir(self.audio_dir)
+        transcript_df = self.transcript_df
+        _dir = self.transcript_df['path']
         dataset = []
+        list_file_error = []
+        list_index_error = []
         for mp3 in _dir:
             try:
                 if (mp3[-3:] == 'wav'):
@@ -59,8 +63,16 @@ class PreprocessAudio:
                 # print(mfcc.shape)
                 dataset.append(mfcc.numpy().tolist())
                 os.unlink(mp3)
+                i += 1
             except:
                 print(f"Error di file {mp3}")
-                return
+                print(f"Counter di {i}")
+                list_file_error.append(mp3)
+                list_index_error.append(i)
+                transcript_df = transcript_df.drop(i)
+                i += 1
+                continue
+            
+        transcript_df = transcript_df.reset_index(drop=True)
 
-        return dataset
+        return dataset, list_file_error, list_index_error, transcript_df
