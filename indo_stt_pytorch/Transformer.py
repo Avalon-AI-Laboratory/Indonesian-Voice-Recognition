@@ -2,6 +2,15 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+class GELU(nn.Module):
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self, x):
+        error_const = torch.erf(x / math.sqrt(2.0))
+        x = x * 0.5 * (1.0 + error_const(x))
+        return x
+
 class TokenEmbedding(nn.Module):
     def __init__(self, num_vocab=1000, maxlen=100, num_hid=64):
         super().__init__()
@@ -22,7 +31,7 @@ class SpeechFeatureEmbedding(nn.Module):
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
         self.conv2 = nn.Conv1d(in_channels=num_hid, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
         self.conv3 = nn.Conv1d(in_channels=num_hid, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
-        self.gelu = nn.GELU()
+        self.gelu = GELU()
     
     def forward(self, x):
         x = self.conv1(x)
@@ -39,7 +48,7 @@ class TransformerEncoder(nn.Module):
         self.att = nn.MultiheadAttention(embed_dim, num_heads)
         self.ffn = nn.Sequential(
             nn.Linear(embed_dim, feed_forward_dim),
-            nn.GELU(),
+            GELU(),
             nn.Linear(feed_forward_dim, embed_dim)
         )
         self.layernorm1 = nn.LayerNorm(embed_dim, eps=1e-6)
@@ -68,7 +77,7 @@ class TransformerDecoder(nn.Module):
         self.ffn_dropout = nn.Dropout(0.1)
         self.ffn = nn.Sequential(
             nn.Linear(embed_dim, feed_forward_dim),
-            nn.GELU(),
+            GELU(),
             nn.Linear(feed_forward_dim, embed_dim)
         )
     
