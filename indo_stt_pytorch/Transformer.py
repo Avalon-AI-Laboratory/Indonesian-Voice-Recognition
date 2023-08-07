@@ -33,50 +33,13 @@ class SpeechFeatureEmbedding(nn.Module):
         x = self.gelu(x)
         return x
 
-class MultiHeadAttention(nn.Module):
-    def __init__(self, embed_dim, num_heads):
-        super(MultiHeadAttention, self).__init__()
-        self.num_heads = num_heads
-        self.head_dim = embed_dim // num_heads
-        
-        self.query = nn.Linear(embed_dim, embed_dim)
-        self.key = nn.Linear(embed_dim, embed_dim)
-        self.value = nn.Linear(embed_dim, embed_dim)
-        
-        self.fc_out = nn.Linear(embed_dim, embed_dim)
-        
-    def forward(self, query, key, value):
-        batch_size = query.shape[0]
-        
-        query = self.query(query)
-        key = self.key(key)
-        value = self.value(value)
-        
-        query = query.view(batch_size, -1, self.num_heads, self.head_dim)
-        key = key.view(batch_size, -1, self.num_heads, self.head_dim)
-        value = value.view(batch_size, -1, self.num_heads, self.head_dim)
-        
-        query = query.transpose(1, 2)
-        key = key.transpose(1, 2)
-        value = value.transpose(1, 2)
-        
-        scores = torch.matmul(query, key.transpose(-2, -1))
-        scores = scores / torch.sqrt(self.head_dim)
-        
-        attention_weights = F.softmax(scores, dim=-1)
-        out = torch.matmul(attention_weights, value)
-        
-        out = out.transpose(1, 2).contiguous().view(batch_size, -1, self.num_heads * self.head_dim)
-        
-        return self.fc_out(out)
-
 class TransformerEncoder(nn.Module):
     def __init__(self, embed_dim, num_heads, feed_forward_dim, rate=0.1):
         super(TransformerEncoder, self).__init__()
-        self.att = MultiHeadAttention(embed_dim, num_heads)
+        self.att = nn.MultiheadAttention(embed_dim, num_heads)
         self.ffn = nn.Sequential(
             nn.Linear(embed_dim, feed_forward_dim),
-            nn.ReLU(),
+            nn.GELU(),
             nn.Linear(feed_forward_dim, embed_dim)
         )
         self.layernorm1 = nn.LayerNorm(embed_dim, eps=1e-6)
@@ -98,14 +61,14 @@ class TransformerDecoder(nn.Module):
         self.layernorm1 = nn.LayerNorm(embed_dim, eps=1e-6)
         self.layernorm2 = nn.LayerNorm(embed_dim, eps=1e-6)
         self.layernorm3 = nn.LayerNorm(embed_dim, eps=1e-6)
-        self.self_att = MultiHeadAttention(embed_dim, num_heads)
-        self.enc_att = MultiHeadAttention(embed_dim, num_heads)
+        self.self_att = nn.MultiheadAttention(embed_dim, num_heads)
+        self.enc_att = nn.MultiheadAttention(embed_dim, num_heads)
         self.self_dropout = nn.Dropout(0.5)
         self.enc_dropout = nn.Dropout(0.1)
         self.ffn_dropout = nn.Dropout(0.1)
         self.ffn = nn.Sequential(
             nn.Linear(embed_dim, feed_forward_dim),
-            nn.ReLU(),
+            nn.GELU(),
             nn.Linear(feed_forward_dim, embed_dim)
         )
     
@@ -124,7 +87,59 @@ class TransformerDecoder(nn.Module):
         batch_size = input_shape[0]
         seq_len = input_shape[1]
         causal_mask = self.causalAttentionMask(batch_size, seq_len, seq_len, target.dtype)
-        target_att = self.self_att(target, target, attention_mask=causal_mask)
+        target_att = self.self_att(target, target, target, att_mask=causal_mask)
+        target_norm = self.layernorm1(target + self.self_dropout(target_att))
+        enc_out = self.enc_att(target_norm, target_norm, enc_out)
+        enc_out_norm = self.layernorm2(self.enc_dropout(enc_out) + target_norm)
+        ffn_out = self.ffn(enc_out_norm)
+        ffn_out_norm = self.layernorm3(enc_out_norm + self.ffn_dropout(ffn_out))
+        return ffn_out_norm
 
+class Transformer(nn.Module):
+    def __init__(
+        self,
+        num_hid = 64,
+        num_head = 2,
+        num_feed_forward = 128,
+        source_maxlen = 100,
+        target_maxlen = 100,
+        num_layers_enc = 4,
+        num_layers_dec = 1,
+        num_classes = 10
+    ):
+        super().__init__()
+        self.loss_metric = nn.MSELoss()
+        self.num_layers_enc = num_layers_enc
+        self.num_layers_dec = num_layers_dec
+        self.target_maxlen = target_maxlen
+        self.num_classes = num_classes
         
-# MASIH BINGUNG DI MULTIHEADATTENTION (DETAIL: https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html)
+        self.enc_input = SpeechFeatureEmbedding(num_hid=num_hid, maxlen=source_maxlen)
+        self.dec_input = TokenEmbedding(num_vocab=num_classes, maxlen=target_maxlen, num_hid=num_hid)
+        
+        self.encoder = nn.Sequential(
+            self.enc_input,
+            *[TransformerEncoder(num_hid, num_head, num_feed_forward) for _ in range(num_layers_enc)]
+        )
+        
+        for i in range(num_layers_dec):
+            self.add_module(
+                f"dec_layer_{i}",
+                TransformerDecoder(num_hid, num_head, num_feed_forward),
+            )
+
+        self.classifier = nn.Linear(num_hid, num_classes)
+
+    def decode(self, enc_out, target):
+        y = self.dec_input(target)
+        for i in range(self.num_layers_dec):
+            dec_layer = getattr(self, f"dec_layer_{i}")
+            y = dec_layer(enc_out, y)
+        return y
+
+    def forward(self, inputs):
+        source = inputs[0]
+        target = inputs[1]
+        x = self.encoder(source)
+        y = self.decode(x, target)
+        return self.classifier(y)
