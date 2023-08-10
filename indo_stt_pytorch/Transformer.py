@@ -12,18 +12,18 @@ class GELU(nn.Module):
         return x
 
 class TokenEmbedding(nn.Module):
-    def __init__(self, num_vocab=1000, maxlen=100, num_hid=64):
+    def __init__(self, num_vocab=30, num_hid=64, maxlen=524):
         super().__init__()
-        self.emb = nn.Embedding(num_vocab, num_hid)
-        self.pos_emb = nn.Embedding(maxlen, num_hid)
-    
+        self.num_vocab = num_vocab
+        self.num_hid = num_hid
+        self.maxlen = maxlen
+
     def forward(self, x):
         maxlen = x.shape[-1]
-        x = self.emb(x)
-        positions = torch.arange(0, maxlen, 1)
-        positions = self.pos_emb(positions)
-        
-        return x + positions
+        pos = torch.arange(0, maxlen, 1)
+        emb = nn.Embedding(num_vocab, num_hid)(x)
+        pos_emb = nn.Embedding(maxlen, num_hid)(x)
+        return emb + pos_emb
         
 class SpeechFeatureEmbedding(nn.Module):
     def __init__(self, num_hid=64, maxlen=100):
