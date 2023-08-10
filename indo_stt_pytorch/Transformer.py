@@ -12,11 +12,10 @@ class GELU(nn.Module):
         return x
 
 class TokenEmbedding(nn.Module):
-    def __init__(self, num_vocab=30, num_hid=64, maxlen=524):
+    def __init__(self, num_vocab=30, num_hid=64):
         super().__init__()
         self.num_vocab = num_vocab
         self.num_hid = num_hid
-        self.maxlen = maxlen
 
     def forward(self, x):
         maxlen = x.shape[-1]
