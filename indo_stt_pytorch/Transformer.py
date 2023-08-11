@@ -1,14 +1,15 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import math
 
 class GELU(nn.Module):
     def __init__(self):
         super().__init__()
-    
+
     def forward(self, x):
         error_const = torch.erf(x / math.sqrt(2.0))
-        x = x * 0.5 * (1.0 + error_const(x))
+        x = x * 0.5 * (1.0 + error_const)
         return x
 
 class TokenEmbedding(nn.Module):
@@ -23,17 +24,17 @@ class TokenEmbedding(nn.Module):
         emb = nn.Embedding(num_vocab, num_hid)(x)
         pos_emb = nn.Embedding(maxlen, num_hid)(x)
         return emb + pos_emb
-        
+
 class SpeechFeatureEmbedding(nn.Module):
     def __init__(self, num_hid=64, maxlen=100):
         super().__init__()
-        self.conv1 = nn.Conv1d(in_channels=1, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
+        self.conv1 = nn.Conv1d(in_channels=num_hid, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
         self.conv2 = nn.Conv1d(in_channels=num_hid, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
         self.conv3 = nn.Conv1d(in_channels=num_hid, out_channels=num_hid, kernel_size=11, stride=2, padding=5)
         self.gelu = GELU()
-    
+
     def forward(self, x):
-        x = self.conv1(x)
+        x = self.conv1(x.T)
         x = self.gelu(x)
         x = self.conv2(x)
         x = self.gelu(x)
@@ -54,9 +55,10 @@ class TransformerEncoder(nn.Module):
         self.layernorm2 = nn.LayerNorm(embed_dim, eps=1e-6)
         self.dropout1 = nn.Dropout(rate)
         self.dropout2 = nn.Dropout(rate)
-        
+
     def forward(self, inputs):
-        attn_output = self.att(inputs, inputs, inputs)
+        inputs = inputs.T
+        attn_output = self.att(inputs, inputs, inputs)[0]
         attn_output = self.dropout1(attn_output)
         out1 = self.layernorm1(inputs + attn_output)
         ffn_output = self.ffn(out1)
@@ -79,7 +81,7 @@ class TransformerDecoder(nn.Module):
             GELU(),
             nn.Linear(feed_forward_dim, embed_dim)
         )
-    
+
     def causalAttentionMask(self, batch_size, n_dest, n_src, dtype):
         i = torch.arange(n_dest)[:, None]
         j = torch.arange(n_src)
@@ -89,15 +91,15 @@ class TransformerDecoder(nn.Module):
         mult = torch.cat([torch.tensor([batch_size], dtype=torch.int32), torch.tensor([1, 1], dtype=torch.int32)])
         mult = mult.unsqueeze(0)
         return mask.expand(*mult)
-    
+
     def forward(self, enc_out, target):
         input_shape = target.shape
         batch_size = input_shape[0]
         seq_len = input_shape[1]
         causal_mask = self.causalAttentionMask(batch_size, seq_len, seq_len, target.dtype)
-        target_att = self.self_att(target, target, target, att_mask=causal_mask)
+        target_att = self.self_att(target, target, target, att_mask=causal_mask)[0]
         target_norm = self.layernorm1(target + self.self_dropout(target_att))
-        enc_out = self.enc_att(target_norm, target_norm, enc_out)
+        enc_out = self.enc_att(target_norm, target_norm, enc_out)[0]
         enc_out_norm = self.layernorm2(self.enc_dropout(enc_out) + target_norm)
         ffn_out = self.ffn(enc_out_norm)
         ffn_out_norm = self.layernorm3(enc_out_norm + self.ffn_dropout(ffn_out))
@@ -121,15 +123,15 @@ class Transformer(nn.Module):
         self.num_layers_dec = num_layers_dec
         self.target_maxlen = target_maxlen
         self.num_classes = num_classes
-        
+
         self.enc_input = SpeechFeatureEmbedding(num_hid=num_hid, maxlen=source_maxlen)
-        self.dec_input = TokenEmbedding(num_vocab=num_classes, maxlen=target_maxlen, num_hid=num_hid)
-        
+        self.dec_input = TokenEmbedding(num_vocab=num_classes, num_hid=num_hid)
+
         self.encoder = nn.Sequential(
             self.enc_input,
             *[TransformerEncoder(num_hid, num_head, num_feed_forward) for _ in range(num_layers_enc)]
         )
-        
+
         for i in range(num_layers_dec):
             self.add_module(
                 f"dec_layer_{i}",
