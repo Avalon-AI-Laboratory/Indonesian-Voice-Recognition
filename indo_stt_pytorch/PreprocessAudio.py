@@ -78,6 +78,8 @@ class PreprocessAudio:
         transcript_df = self.transcript_df
         _dir = self.transcript_df['path']
         dataset = []
+        list_file_error = []
+        list_index_error = []
         for mp3 in _dir:
             try:
                 if (mp3[-3:] == 'wav'):
@@ -92,8 +94,10 @@ class PreprocessAudio:
                 os.unlink(mp3)
                 i += 1
             except:
+                print(f"Counter di {i}", flush=True)
                 print(f"Error di file {mp3}")
-                print(f"Counter di {i}")
+                list_file_error.append(mp3)
+                list_index_error.append(i)
                 transcript_df = transcript_df.drop(i)
                 i += 1
                 continue
