@@ -52,24 +52,48 @@ Kevin ft.  Idris
 * Still discussing about Transformer architecture from "Attention is All You Need Paper"
 
 ## 3/08/2023
+Kevin ft.  Idris
+* Resolved data loading error caused by mismatched matrix sizes in the data loader.
+* Experimented with different batch sizes to optimize model training performance.
 
 ## 5/08/2023
+Kevin ft.  Idris
+*Investigated and debugged the gradient exploding issue during model training.
 
 ## 7/08/2023
+Kevin ft.  Idris
+* Experimented with implementing a model architecture using TensorFlow.
+* Decided to transform the TensorFlow architecture into a PyTorch architecture to align with the existing code.
 
 ## 9/08/2023
+Kevin
+* Finalized the adjustments to the model architecture to ensure compatibility with the existing PyTorch code.
+* Conducted thorough testing to confirm the proper functionality and integrity of the updated architecture.
 
 ## 11/08/2023
+Kevin
+* Identified a critical issue in the ivr_project.ipynb code related to padding, realizing that padding with -1 was incorrect.
+* Rectified the padding approach, making sure that it aligns with the correct requirements.
 
 ## 13/08/2023
+Kevin
+* Successfully resolved errors in the transformer model implementation.
 
 ## 15/08/2023
+Kevin
+*
 
 ## 17/08/2023
+Kevin
+* 
 
 ## 19/08/2023
+Kevin
+* 
 
 ## 21/08/2023
+Kevin
+* 
 
 ## 23/08/2023
 Kevin:
