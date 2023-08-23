@@ -92,7 +92,7 @@ Kevin
 * Conducted a re-evaluation of the project's progress and current state.
 
 Idris
-*Attempted audio enhancement on the data to improve its quality before the filtering process.
+* Attempted audio enhancement on the data to improve its quality before the filtering process.
 
 ## 21/08/2023
 Kevin
