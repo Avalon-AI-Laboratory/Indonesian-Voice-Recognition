@@ -105,3 +105,4 @@ Idris
 ## 23/08/2023
 Kevin:
 * Successfully fixed the forward propagation for transformer, conducting test for model training.
+* Successfully train the model. Building functions for displaying outputs (inference) and hyperparameter tuning.
