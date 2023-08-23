@@ -38,3 +38,39 @@ Idris :
 Kevin :
 * Updated main.ipynb, model.py, and PreprocessAudio.py
 * Improving visualization and further audio cleaning
+
+## 28/07/2023
+Kevin ft. Idris:
+* Trying implement DeepSpeech2 architecture on LJSpeech Dataset, returns about 15% word error rate
+
+## 30/07/2023
+Kevin ft. Idris
+* Since DeepSpeech2 is a pretrained model and not our original, we want to build our model again using our modified transformer
+
+## 1/08/2023
+Kevin ft.  Idris
+* Still discussing about Transformer architecture from "Attention is All You Need Paper"
+
+## 3/08/2023
+
+## 5/08/2023
+
+## 7/08/2023
+
+## 9/08/2023
+
+## 11/08/2023
+
+## 13/08/2023
+
+## 15/08/2023
+
+## 17/08/2023
+
+## 19/08/2023
+
+## 21/08/2023
+
+## 23/08/2023
+Kevin:
+* Successfully fixed the forward propagation for transformer, conducting test for model training.
