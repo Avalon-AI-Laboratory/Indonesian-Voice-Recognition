@@ -80,20 +80,27 @@ Kevin
 * Successfully resolved errors in the transformer model implementation.
 
 ## 15/08/2023
-Kevin
-*
+Idris
+* Explored an alternative approach to audio preprocessing by applying audio enhancement techniques before filtering.
 
 ## 17/08/2023
 Kevin
-* 
+* Debugging to identified and addressed minor errors within the transformer
 
 ## 19/08/2023
 Kevin
-* 
+* Conducted a re-evaluation of the project's progress and current state.
+
+Idris
+*Attempted audio enhancement on the data to improve its quality before the filtering process.
 
 ## 21/08/2023
 Kevin
-* 
+* Discussed adjustments or refinements based on the evaluation to ensure project alignment with goals.
+
+Idris
+* Observed that the enhanced audio resulted in unclear and even worse quality compared to the original, leading to a decision to cancel this approach.
+* Reverted to the previous audio preprocessing strategy due to the unfavorable results from the enhancement attempt.
 
 ## 23/08/2023
 Kevin:
