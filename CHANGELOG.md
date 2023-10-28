@@ -1,4 +1,4 @@
-## 18/07/2023
+![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/04e02221-9dff-4669-af71-b14ccb0d347b)## 18/07/2023
 Kevin:
 * Created main.ipynb and RNNT.py
 * Created MFCC Feature Extraction functions for PyTorch module (including VAD to remove silence moments)
@@ -106,3 +106,70 @@ Idris
 Kevin:
 * Successfully fixed the forward propagation for transformer, conducting test for model training.
 * Successfully train the model. Building functions for displaying outputs (inference) and hyperparameter tuning.
+
+## 25/08/2023
+Kevin & Idris:
+* Successfully implement backpropagation using cross entropy loss
+
+## 27/08/2023
+Kevin & Idris:
+* No significant progress
+
+## 29/08/2023
+Kevin:
+* The loss is observed and it returns relatively high loss score using cross entropy loss (about 1.278). Our hypothesize is that the data is insufficient. Thus we gather more data (about 40000).
+![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/ecc04ed0-a10f-494f-ad08-cc025a665a50)
+Idris:
+* Preprocessed the data and fixed some parts of the preprocessing module (conv2wav_torch)
+
+## 31/08/2023
+Kevin & Idris:
+* No significant progress
+
+## 02/09/2023
+Kevin & Idris:
+* Stuck on computation memory when trying to preprocess 40000 data, looking for a way to optimize the code.
+
+## 04/09/2023
+Kevin & Idris:
+* Still facing the same problem as before.
+
+## 06/09/2023
+Kevin & Idris:
+* Tries to preprocess the audio using wavelet analysis and deeper preprocessing, such as dropping non-indonesian vocabulary. Trying to align every MFCC on the same frequency bandwidth. It doesn't give any significant results
+
+## 08/09/2023
+Idris:
+* Requesting Google Colab Pro for solving computation memory problems. As a result, we successfully preprocessed 10000 MFCC data
+Kevin:
+* Initial result:
+![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/b00ac8ae-bc29-4d50-b7d2-7efcad5f3aa4)
+* Trying to fix the vanishing first character problem and solved it.
+## 10/09/2023
+Idris and Kevin:
+* Training the data, did not give any significant results. Tried hyperparameter tuning such as changing feed-forward network layers count, encoder and decoder layers count, etc.
+
+## 12/09/2023
+* No significant progress
+
+## 14/09/2023
+* No significant progress
+
+## 16/09/2023
+Idris:
+* Encountering memory overload when trying to preprocess 40000 data through Google Colab Pro
+![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/e73eafe6-7252-46c2-9e72-ed0d2a40c1e5)
+Kevin:
+* Trying to implement Multiprocessing for preprocessing audio data. As a result, the device experienced system crash due to memory overleak
+![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/e8a1176a-fb99-46d3-9ce8-f0be5731e636)
+
+## 18/09/2023
+* No significant progress
+
+## 20/09/2023
+* No significant progress
+
+## 22/09/2023
+* No significant progress
+
+## 24/09/2023
