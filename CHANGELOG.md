@@ -1,4 +1,4 @@
-![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/04e02221-9dff-4669-af71-b14ccb0d347b)## 18/07/2023
+## 18/07/2023
 Kevin:
 * Created main.ipynb and RNNT.py
 * Created MFCC Feature Extraction functions for PyTorch module (including VAD to remove silence moments)
