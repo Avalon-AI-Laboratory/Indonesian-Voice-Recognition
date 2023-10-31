@@ -164,7 +164,8 @@ Kevin:
 ![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/e8a1176a-fb99-46d3-9ce8-f0be5731e636)
 
 ## 18/09/2023
-* No significant progress
+Kevin & Idris:
+* Continued to explore various techniques to optimize data preprocessing and model training.
 
 ## 20/09/2023
 * No significant progress
@@ -173,3 +174,24 @@ Kevin:
 * No significant progress
 
 ## 24/09/2023
+Kevin & Idris:
+* Explored different approaches to handling memory overleak.
+* Improved the efficiency of data preprocessing by optimizing code.
+
+## 25/09/2023
+Kevin:
+* Conducted extensive testing and evaluation of the model's performance, identifying areas for improvement.
+
+## 26/09/2023
+Kevin:
+* Focused on fine-tuning the model architecture.
+
+## 28/09/2023
+Kevin:
+* Developing a evaluation framework to assess the model's performance, including metrics such as word error rate (WER) and accuracy.
+
+Idris:
+
+## 29/09/2023
+Kevin:
+* 
