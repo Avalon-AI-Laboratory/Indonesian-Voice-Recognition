@@ -230,11 +230,13 @@ Idris:
 * Implemented a data management strategy to address memory overleak issues during audio preprocessing.
 * Divided the dataset into batch files in the .pt format, resulting in the segmentation of the 40,000 data points into four equal parts, each containing 10,000 data points.
 * This partitioning approach aims to optimize memory usage and streamline the preprocessing pipeline, ensuring more efficient data processing and model training.
+![image](img/1249-1613-6913.png)
 
 ## 14/10/2023
 Idris:
 * Attempted model training using the entire 40,000 data points in a single batch, but encountered persistent memory limitations.
 * Experienced recurring kernel crashes, even when utilizing a supercomputer for processing.
+![image](img/image.png)
 
 ## 24/10/2023
 Kevin & Idris:
@@ -244,3 +246,20 @@ Kevin & Idris:
 ## 25/10/2023
 Kevin:
 * Explored a new approach in the Indonesian Voice Recognition project by transitioning from the use of Mel-frequency cepstral coefficients (MFCC) to Mel spectrograms for audio feature extraction.
+
+## 27/10/2023
+Kevin:
+* Following the adoption of Mel spectrograms for audio feature extraction, observed a notable improvement in training performance.
+
+## 28/10/2023
+Kevin & Idris:
+* Prepared the best-performing model and the necessary code for deployment in a Streamlit.
+
+## 29/10/2023
+Kevin & Idris:
+* Successfully completed the deployment.
+
+# 30/10/2023
+Kevin & Idris:
+* After multiple epochs of training, the model exhibited increasing signs of overfitting.
+* Suspected issues within the model architecture that required reevaluation.
