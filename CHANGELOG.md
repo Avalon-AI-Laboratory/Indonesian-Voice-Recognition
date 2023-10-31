@@ -226,5 +226,21 @@ Kevin & idris:
 * Achieved significant improvement in transcription accuracy, primarily attributed to a key revelation in the choice of the loss function. Transitioned from using Binary Cross-Entropy (BCE) to Connectionist Temporal Classification (CTC) loss function.
 
 ## 13/10/2023
+Idris:
+* Implemented a data management strategy to address memory overleak issues during audio preprocessing.
+* Divided the dataset into batch files in the .pt format, resulting in the segmentation of the 40,000 data points into four equal parts, each containing 10,000 data points.
+* This partitioning approach aims to optimize memory usage and streamline the preprocessing pipeline, ensuring more efficient data processing and model training.
 
+## 14/10/2023
+Idris:
+* Attempted model training using the entire 40,000 data points in a single batch, but encountered persistent memory limitations.
+* Experienced recurring kernel crashes, even when utilizing a supercomputer for processing.
 
+## 24/10/2023
+Kevin & Idris:
+* Optimizing memory utilization to enhance the overall performance of the project.
+* Debugging significant memory consumption issue.
+
+## 25/10/2023
+Kevin:
+* Explored a new approach in the Indonesian Voice Recognition project by transitioning from the use of Mel-frequency cepstral coefficients (MFCC) to Mel spectrograms for audio feature extraction.
