@@ -118,6 +118,7 @@ Kevin & Idris:
 ## 29/08/2023
 Kevin:
 * The loss is observed and it returns relatively high loss score using cross entropy loss (about 1.278). Our hypothesize is that the data is insufficient. Thus we gather more data (about 40000).
+
 ![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/ecc04ed0-a10f-494f-ad08-cc025a665a50)
 Idris:
 * Preprocessed the data and fixed some parts of the preprocessing module (conv2wav_torch)
@@ -143,6 +144,7 @@ Idris:
 * Requesting Google Colab Pro for solving computation memory problems. As a result, we successfully preprocessed 10000 MFCC data
 Kevin:
 * Initial result:
+
 ![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/b00ac8ae-bc29-4d50-b7d2-7efcad5f3aa4)
 * Trying to fix the vanishing first character problem and solved it.
 ## 10/09/2023
@@ -158,9 +160,11 @@ Idris and Kevin:
 ## 16/09/2023
 Idris:
 * Encountering memory overload when trying to preprocess 40000 data through Google Colab Pro
+
 ![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/e73eafe6-7252-46c2-9e72-ed0d2a40c1e5)
 Kevin:
 * Trying to implement Multiprocessing for preprocessing audio data. As a result, the device experienced system crash due to memory overleak
+
 ![image](https://github.com/Avalon-AI-Laboratory/Indonesian-Voice-Recognition/assets/92637327/e8a1176a-fb99-46d3-9ce8-f0be5731e636)
 
 ## 18/09/2023
@@ -230,12 +234,14 @@ Idris:
 * Implemented a data management strategy to address memory overleak issues during audio preprocessing.
 * Divided the dataset into batch files in the .pt format, resulting in the segmentation of the 40,000 data points into four equal parts, each containing 10,000 data points.
 * This partitioning approach aims to optimize memory usage and streamline the preprocessing pipeline, ensuring more efficient data processing and model training.
+
 ![image](img/1249-1613-6913.png)
 
 ## 14/10/2023
 Idris:
 * Attempted model training using the entire 40,000 data points in a single batch, but encountered persistent memory limitations.
 * Experienced recurring kernel crashes, even when utilizing a supercomputer for processing.
+
 ![image](img/image.png)
 
 ## 24/10/2023
