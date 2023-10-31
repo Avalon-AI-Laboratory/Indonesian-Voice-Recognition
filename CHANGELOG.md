@@ -191,7 +191,40 @@ Kevin:
 * Developing a evaluation framework to assess the model's performance, including metrics such as word error rate (WER) and accuracy.
 
 Idris:
+* Worked on enhancing the quality of the audio data further.
 
 ## 29/09/2023
 Kevin:
-* 
+* Continued to fine-tune the model based on the evaluation results, with a focus on reducing WER and improving overall accuracy.
+
+## 03/10/2023
+Kevin :
+* Experimenting with different learning rates and batch sizes.
+
+Idris:
+* Exploring the implementation of a dynamic learning rate scheduler to improve model training.
+
+## 05/10/2023
+Idris:
+* Optimizing audio preprocessing to make better eliminate silent segments.
+
+Kevin:
+* Conducted additional training runs with variations in batch sizes and learning rates to find the optimal hyperparameters.
+
+## 07/10/2023
+Kevin & Idris:
+* Implemented a learning rate scheduler that has proven effective in enhancing model convergence.
+* Addressed the issue of stagnation in the average loss value (avg_loss) by successfully reducing it to 0.8.
+
+## 08/10/2023
+Kevin:
+* Undertook additional model testing with a specific focus on improving transcription accuracy.
+* Achieved an improved transcription result for the phrase 'ibu sedang tidak ada di rumah,' with the prediction 'tu sadang tidak ada ai muma,' which indicates better word pattern recognition and alignment
+
+## 10/10/2023
+Kevin & idris:
+* Achieved significant improvement in transcription accuracy, primarily attributed to a key revelation in the choice of the loss function. Transitioned from using Binary Cross-Entropy (BCE) to Connectionist Temporal Classification (CTC) loss function.
+
+## 13/10/2023
+
+
