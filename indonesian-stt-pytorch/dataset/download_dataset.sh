@@ -5,7 +5,7 @@ mkdir audio_folder/train
 mkdir audio_folder/valid
 mkdir batch_data
 
-wget https://drive.google.com/dummy_link/cv-corpus-15.0-2023-09-08-id.tar
+wget "drive.google.com/u/3/uc?id=1NfCGqWJOxYG0XOWDj0K4fD3mPB7RWHRR&export=download&confirm=yes"
 tar -xf cv-corpus-15.0-2023-09-08-id.tar
 
 mv cv-corpus-15.0-2023-09-08/id ./common_voice_id
