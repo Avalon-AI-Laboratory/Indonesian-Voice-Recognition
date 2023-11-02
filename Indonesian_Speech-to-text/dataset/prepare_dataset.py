@@ -11,7 +11,7 @@ def main():
     os.makedirs("batch_data", exist_ok=True)
     os.makedirs("common_voice_id", exist_ok=True)
   
-    url = 'drive.google.com/u/3/uc?id=1NfCGqWJOxYG0XOWDj0K4fD3mPB7RWHRR'
+    url = 'https://drive.google.com/u/3/uc?id=1NfCGqWJOxYG0XOWDj0K4fD3mPB7RWHRR'
     output = 'cv-corpus-15.0-2023-09-08-id.tar'
     gdown.download(url, output, quiet=False)
     
