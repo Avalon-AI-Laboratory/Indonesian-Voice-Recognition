@@ -12,7 +12,8 @@ Ini merupakan folder yang mencakup keseluruhan proses preprocess dan training. S
 Kemudian jalankan preprocess_data.py dalam folder dataset untuk mendownload dataset (semua lisensi dan hak cipta dimiliki oleh Mozilla Common Voice). Pastikan untuk menginstall `gdown` terlebih dahulu.
 ```bash
 pip install gdown
-python ./dataset/prepare_dataset.py
+cd dataset
+python prepare_dataset.py
 ```
 
 **Author:**
