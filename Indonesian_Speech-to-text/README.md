@@ -8,6 +8,7 @@ Ini merupakan folder yang mencakup keseluruhan proses preprocess dan training. S
 7. Pandas
 8. Numpy
 9. Matplotlib
+10. pydub
 
 Kemudian jalankan preprocess_data.py dalam folder dataset untuk mendownload dataset (semua lisensi dan hak cipta dimiliki oleh Mozilla Common Voice). Pastikan untuk menginstall `gdown` terlebih dahulu.
 ```bash
