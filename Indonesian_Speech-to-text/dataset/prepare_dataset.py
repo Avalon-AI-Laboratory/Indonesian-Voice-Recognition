@@ -19,7 +19,14 @@ def main():
         tar_ref.extractall('.')
     
     if os.path.exists("cv-corpus-15.0-2023-09-08/id"):
-        shutil.move("cv-corpus-15.0-2023-09-08/id", "common_voice_id")
+        id_path = "cv-corpus-15.0-2023-09-08/id"
+        for item in os.listdir(id_path):
+            s = os.path.join(id_path, item)
+            d = os.path.join("common_voice_id", item)
+            if os.path.isdir(s):
+                shutil.move(s, d)
+            else:
+                shutil.copy2(s, d)
     
     shutil.rmtree("cv-corpus-15.0-2023-09-08", ignore_errors=True)
     os.remove(output)
