@@ -269,3 +269,42 @@ Kevin & Idris:
 Kevin & Idris:
 * After multiple epochs of training, the model exhibited increasing signs of overfitting.
 * Suspected issues within the model architecture that required reevaluation.
+
+# 01/11/2023
+Idris:
+* Trying to re-evaluate models and reading existing references (https://its.id/m/SpeechRecognition)
+Kevin:
+* Trying to solve high computational memory problems by reading references and found that the problem can be solved by implementing batch-on-the-fly technique
+
+# 03/11/2023
+Kevin:
+* Identified the cause of high computational memory problem. Until this time, the method we implemented to create a Dataset instance is by storing every preprocessed dataset in main memory. This will cause memory overleak since we were trying to store a enormous-sized variable in memory. This problem is solved by implementing torch.utils.dataset whereareas this class will fetch a data directly from audio folder, preprocess the audiofile inside the class, and returns a spectogram matrix and the numerical representation of transcription.
+```python
+class AudioDataset(Dataset):
+    def __init__(self, transcriptions, audio_dir):
+        self.transcriptions = transcriptions.reset_index(drop=True)
+        self.audio_dir = audio_dir
+        self.convert2spectogram = ConvertWavToSpectogram()
+
+    def __len__(self):
+        return len(self.transcriptions)
+
+    def __getitem__(self, idx):
+        audio_dir = os.path.join(self.audio_dir, self.transcriptions['path'][idx])
+        return self.load_audio(audio_dir), torch.tensor(conv_char2num(self.transcriptions['sentence'][idx])).detach().to(device)
+
+    def load_audio(self, audiofile):
+        try:
+            if (audiofile[-3:] == 'wav'):
+                filename = f'{audiofile[:-4]}.wav'
+                mp3file = AudioSegment.from_mp3(audiofile)
+                mp3file.export(filename, format='wav')
+                os.remove(audiofile)
+                audiofile = filename
+            
+            log_mel_spectrogram = self.convert2spectogram.transform(audiofile).tolist()
+        except:
+            print(f"Error dalam mengambil audio, kemungkinan audio ini tidak memiliki aktivitas suara")
+        
+        return torch.tensor(add_padding(log_mel_spectrogram, n_mels = N_MELS, max_padding = 728)).to(device)
+```
