@@ -278,7 +278,7 @@ Kevin:
 
 # 03/11/2023
 Kevin:
-* Identified the cause of high computational memory problem. Until this time, the method we implemented to create a Dataset instance is by storing every preprocessed dataset in main memory. This will cause memory overleak since we were trying to store a enormous-sized variable in memory. This problem is solved by implementing torch.utils.dataset whereareas this class will fetch a data directly from audio folder, preprocess the audiofile inside the class, and returns a spectogram matrix and the numerical representation of transcription.
+* Identified the cause of high computational memory problem. Until this time, the method we implemented to create a Dataset instance is by storing every preprocessed dataset in the main memory. This will cause memory overleak since we were trying to store an enormous-sized variable in memory. This problem is solved by implementing torch.utils.data.Dataset whereareas this class will fetch a data (audio file) directly from the audio folder, preprocess the data inside the class, and returns a spectogram matrix and the numerical representation of transcription. As a result, the training was successfully tested on 8 GB NVIDIA RAM using 25684 data (which was not possible before).
 ```python
 class AudioDataset(Dataset):
     def __init__(self, transcriptions, audio_dir):
