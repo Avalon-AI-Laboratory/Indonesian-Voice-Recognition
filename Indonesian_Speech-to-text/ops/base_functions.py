@@ -41,7 +41,6 @@ def conv_num2char(num):
 def conv2wav_torch(file_audio, resample):
     waves, sr = torchaudio.load(file_audio)
     waves = F_ta.resample(waves, orig_freq=sr, new_freq=resample)
-    os.remove(file_audio)  # Remove the temporary WAV file after processing
     return waves, resample
 
 def vad_torch(waves, buffer_size, threshold, display_info = False):
