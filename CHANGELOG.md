@@ -308,3 +308,57 @@ class AudioDataset(Dataset):
         
         return torch.tensor(add_padding(log_mel_spectrogram, n_mels = N_MELS, max_padding = 728)).to(device)
 ```
+
+# 05/11/2023
+Training on 85 epochs, the result is insignificant:
+```
+Ground truth 0 =>  <setelah masuk kamar saya menutup pintu>
+Generation 0   =>  None
+Ada kesalahan saat menghitung WER
+-------------------------------------------------------------------------
+Ground truth 1 =>  <daging cincang yang digunakan dalam pai daging cincang tidak mengandung daging sama sekali>
+Generation 1   =>  <bagian ini sedang menggugugi kekekakanananan n n n namananan nananan n n n n g g g g g g g g g g g g g g g sasasasasasa>
+-------------------------------------------------------------------------
+Ground truth 2 =>  <tunggu saya tunggu sebentar>
+Generation 2   =>  <kudang siang mudah cuka>
+-------------------------------------------------------------------------
+Ground truth 3 =>  <datanglah ke rumah kapanpun kamu suka>
+Generation 3   =>  <terdapat mana kamu tangan kamu ke lisakan>
+-------------------------------------------------------------------------
+Ground truth 4 =>  <itulah jawaban yang benar>
+Generation 4   =>  <tidak bulan semarah>
+-------------------------------------------------------------------------
+Ground truth 5 =>  <namun ia tidak muncul untuk sesi rekaman apa pun>
+Generation 5   =>  <namun tidak tidak listri melihat sebuah hari itut>
+-------------------------------------------------------------------------
+Ground truth 6 =>  <aku tidak akan pernah meninggalkanmu>
+Generation 6   =>  <aku terkenal sediring mereka aku dalam belam>
+-------------------------------------------------------------------------
+Ground truth 7 =>  <sesekali ikutlah acara kami>
+Generation 7   =>  <sekelah ini juga terkata pangun>
+-------------------------------------------------------------------------
+Ground truth 8 =>  <akan kulakukan yang kubisa>
+Generation 8   =>  <apakah kamu terlu benarikan>
+-------------------------------------------------------------------------
+Ground truth 9 =>  <tadi malam saya tidur awal karena lelah>
+Generation 9   =>  <perja hari suka berumah dari orang anda>
+-------------------------------------------------------------------------
+Ground truth 10 =>  <tolong beritahu saya nama dan nomor penerbangan anda>
+Generation 10   =>  <lampun kemarin saya sangat mengenarkan dengan negarananananan>
+-------------------------------------------------------------------------
+Ground truth 11 =>  <baru kemarin saya tahu hal tersebut>
+Generation 11   =>  <bagaimana orang saya untuk mary saya turus>
+-------------------------------------------------------------------------
+Ground truth 12 =>  <saya meminjam telepon dari pak kimura>
+Generation 12   =>  <saya memberikan saya menyembaik di kuar>
+-------------------------------------------------------------------------
+Ground truth 13 =>  <rumah adalah tempat kita pulang>
+Generation 13   =>  <penghaman adalah yang tom ke toko atah>
+-------------------------------------------------------------------------
+Ground truth 14 =>  <meskipun dia telah tiada aku tetap mencintainya lebih dari apapun juga>
+Generation 14   =>  <telah saya tidak membuat setuah memperinya kamu tidak setapa dia mengakukan tidak buku tidak mudah>
+-------------------------------------------------------------------------
+Ground truth 15 =>  <karena teleponnya tidak pernah secara fisik ditutup sambungannya tetap bebas pulsa>
+Generation 15   =>  <karena itu dia menyeratikan sebagai pertikan mesusik>
+-------------------------------------------------------------------------
+```
